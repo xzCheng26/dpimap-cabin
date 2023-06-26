@@ -14,7 +14,13 @@ import org.springframework.cache.annotation.EnableCaching;
 public class CabinApplication {
   public static void main(String[] args) {
     SpringApplication.run(CabinApplication.class,args);
-//    Cache<String, Object> cache = BeanContext.getBean(Cache.class);
-//    cache.put("pv", args);
+    if (args != null) {
+      Cache<String, Object> cache = BeanContext.getBean(Cache.class);
+      boolean cacheFlag = Boolean.parseBoolean(args[0]);
+      String basePath = args[1];
+      cache.put("cacheFlag", cacheFlag);
+      cache.put("basePath", basePath);
+    }
+
   }
 }

@@ -1,7 +1,7 @@
 package com.dpi.map.cabin.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dpi.map.cabin.server.pointcloud.PointGroundWebSocket;
+import com.dpi.map.cabin.server.pointcloud.PointCloundWebSocket;
 import com.dpi.map.cabin.server.pointcloud.PointObsWebSocket;
 import lombok.extern.slf4j.Slf4j;
 import org.opengis.referencing.FactoryException;
@@ -104,7 +104,7 @@ public class PointSocketController {
                 if (line.endsWith("---")) {
                     Yaml yaml = new Yaml();
                     String jsonstr = JSONObject.toJSONString(yaml.load(sb.toString()));
-                    PointGroundWebSocket.sendInfoToClient(jsonstr);
+                    PointCloundWebSocket.sendInfoToClient(jsonstr);
                     if (cell != null) {
                         try {
                             Thread.sleep(cell);

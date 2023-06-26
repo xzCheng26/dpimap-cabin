@@ -15,8 +15,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @Author: chengxirui
  * @Date: 2023-04-26  17:52
  */
-@ServerEndpoint(path = "/point-ground-ws", port = "${ws.point.port1}")
-public class PointGroundWebSocket {
+@ServerEndpoint(path = "/point-position-ws", port = "${ws.point.port3}")
+public class PointPositionWebSocket {
 
     /**
      * 与某个客户端的连接会话， 需要通过它来给客户端发送数据
@@ -26,7 +26,7 @@ public class PointGroundWebSocket {
     /**
      * concurrent包的线程安全Set，用来存放么个客户端对应的MyWebSocket对象
      */
-    private static CopyOnWriteArraySet<PointGroundWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
+    private static CopyOnWriteArraySet<PointPositionWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
 
     /**
      *建立ws连接前的配置
@@ -85,7 +85,7 @@ public class PointGroundWebSocket {
      * @throws IOException
      */
     public static void sendInfoToClient(String message) throws IOException {
-        for (PointGroundWebSocket myWebSocket : webSocketSet) {
+        for (PointPositionWebSocket myWebSocket : webSocketSet) {
             myWebSocket.sendMessage(message);
         }
     }

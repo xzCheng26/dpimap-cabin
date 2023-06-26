@@ -102,56 +102,43 @@ public class TCPServer {
                 if (in == null) {
                     return;
                 }
-                String logFilePath =  cache.getIfPresent("logFilePath").toString();
-                File position = new File("D:\\dpi-515\\logs\\" + logFilePath + "\\position.txt");
                 FileWriter positionWriter = null;
-                File obs = new File("D:\\dpi-515\\logs\\" + logFilePath + "\\obs.txt");
                 FileWriter obsfileWriter = null;
-                File line = new File("D:\\dpi-515\\logs\\" + logFilePath + "\\line.txt");
                 FileWriter lineWriter = null;
-                File speed = new File("D:\\dpi-515\\logs\\" + logFilePath + "\\speed.txt");
                 FileWriter speedWriter = null;
-                File errorInfo = new File("D:\\dpi-515\\logs\\error.txt");
                 FileWriter errorWriter = null;
                 try {
-                    lineWriter = new FileWriter(line, true);
-                    positionWriter = new FileWriter(position, true);
-                    obsfileWriter = new FileWriter(obs, true);
-                    speedWriter = new FileWriter(speed, true);
-                    errorWriter = new FileWriter(errorInfo, true);
+                    String basePath =  cache.getIfPresent("basePath").toString();
+                    String logFilePath =  cache.getIfPresent("logFilePath").toString();
+                    if (basePath != null && logFilePath != null) {
+                        String localpath = basePath + logFilePath;
+                        File position = new File(localpath + "\\position.txt");
+                        File obs = new File(localpath + "\\obs.txt");
+                        File line = new File(localpath + "\\line.txt");
+                        File speed = new File(localpath + "\\speed.txt");
+                        File errorInfo = new File(localpath + "\\error.txt");
+
+                        lineWriter = new FileWriter(line, true);
+                        positionWriter = new FileWriter(position, true);
+                        obsfileWriter = new FileWriter(obs, true);
+                        speedWriter = new FileWriter(speed, true);
+                        errorWriter = new FileWriter(errorInfo, true);
+                    }
+
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 try {
-
-//                    int tryTimes = 0;
-//                    int count = in.available();
-//                    while (count == 0) {
-//                        count = in.available();
-//                        tryTimes++;
-//                        if (tryTimes > 100 && count==0) {
-//                            break;
-//                        }
-//                    }
-
                     int available = in.available();
                     if (available > 0) {
                         byte[] buffer = new byte[available];
                         int size = in.read(buffer);
-//                        System.out.println("size:   " + size);
                         if (size > 0) {
                             String data = new String(buffer,0,size);
 //                            System.out.println("TCPClient say :" + data);
                             //返回结果给TcpClient
                             String response = "success";
-
-//                            String utmCode = String.format("EPSG:%d%s", 32600 + Const.ZONE_NUMBER, Const.IS_NORTHERN_HEMISPHERE ? "" : "+south");
-//                            CoordinateReferenceSystem utmCrs = CRS.decode(utmCode);
-//                            // 获取WGS84投影的CoordinateReferenceSystem
-//                            CoordinateReferenceSystem wgs84Crs = CRS.decode("EPSG:4326");
-
-
                             if (port == 30000) {
                                 // 实时位置
                                 JSONObject potionData = null;
@@ -188,17 +175,23 @@ public class TCPServer {
                                     }
                                     String potionStr = JSONUtil.toJsonStr(positionResponse);
                                     PositionWebSocket.sendInfoToClient(potionStr);
-                                    PrintWriter pw = new PrintWriter(positionWriter);
-                                    pw.println(potionStr);
-                                    pw.flush();
-                                    positionWriter.flush();
-                                    pw.close();
+                                    if (positionWriter != null) {
+                                        PrintWriter pw = new PrintWriter(positionWriter);
+                                        pw.println(potionStr);
+                                        pw.flush();
+                                        positionWriter.flush();
+                                        pw.close();
+                                    }
+
                                 } else {
-                                    PrintWriter pw = new PrintWriter(positionWriter);
-                                    pw.println("{}");
-                                    pw.flush();
-                                    positionWriter.flush();
-                                    pw.close();
+                                    if (positionWriter != null) {
+                                        PrintWriter pw = new PrintWriter(positionWriter);
+                                        pw.println("{}");
+                                        pw.flush();
+                                        positionWriter.flush();
+                                        pw.close();
+                                    }
+
                                 }
                                 out.write(response.getBytes());
                                 out.flush();
@@ -245,12 +238,15 @@ public class TCPServer {
                                     ObstacleWebSocket.sendInfoToClient(obsStr);
 
                                 }
-                                String obsStr = JSONUtil.toJsonStr(obstacleResponseList);
-                                PrintWriter pw = new PrintWriter(obsfileWriter);
-                                pw.println(obsStr);
-                                pw.flush();
-                                obsfileWriter.flush();
-                                pw.close();
+                                if (obsfileWriter != null) {
+                                    String obsStr = JSONUtil.toJsonStr(obstacleResponseList);
+                                    PrintWriter pw = new PrintWriter(obsfileWriter);
+                                    pw.println(obsStr);
+                                    pw.flush();
+                                    obsfileWriter.flush();
+                                    pw.close();
+                                }
+
 
                                 out.write(response.getBytes());
                                 out.flush();
@@ -282,25 +278,18 @@ public class TCPServer {
                                             guideLineResponseArrayList.add(guideLineResponse);
                                         }
 
-//                                        // 创建坐标转换
-//                                        MathTransform transform = CRS.findMathTransform(utmCrs, wgs84Crs);
-//                                        // 创建UTM坐标
-//                                        DirectPosition2D utmCoord = new DirectPosition2D(utmCrs, local.getDouble("trajectPoint_x"), local.getDouble("trajectPoint_y"));
-//                                        // 将UTM坐标转换为WGS84坐标
-//                                        DirectPosition2D wgs84Coord = new DirectPosition2D();
-//                                        transform.transform(utmCoord, wgs84Coord);
-
-
                                     }
                                     String lineStr = JSONUtil.toJsonStr(guideLineResponseArrayList);
                                     GuidelineWebSocket.sendInfoToClient(lineStr);
                                 }
-                                String lineStr = JSONUtil.toJsonStr(guideLineResponseArrayList);
-                                PrintWriter pw = new PrintWriter(lineWriter);
-                                pw.println(lineStr);
-                                pw.flush();
-                                lineWriter.flush();
-                                pw.close();
+                                if (lineWriter != null) {
+                                    String lineStr = JSONUtil.toJsonStr(guideLineResponseArrayList);
+                                    PrintWriter pw = new PrintWriter(lineWriter);
+                                    pw.println(lineStr);
+                                    pw.flush();
+                                    lineWriter.flush();
+                                    pw.close();
+                                }
 
                                 out.write(response.getBytes());
                                 out.flush();
@@ -310,12 +299,13 @@ public class TCPServer {
                                 ImmutableMap map = ImmutableMap.of("speed", speedInt, "currentTime", DateUtil.formatDateTime(new Date()));
                                 String speedStr = JSONUtil.toJsonStr(map);
                                 SpeedWebSocket.sendInfoToClient(speedStr);
-                                PrintWriter pw = new PrintWriter(speedWriter);
-                                pw.println(speedStr);
-                                pw.flush();
-                                speedWriter.flush();
-                                pw.close();
-
+                                if (speedWriter != null) {
+                                    PrintWriter pw = new PrintWriter(speedWriter);
+                                    pw.println(speedStr);
+                                    pw.flush();
+                                    speedWriter.flush();
+                                    pw.close();
+                                }
                                 out.write(response.getBytes());
                                 out.flush();
 
@@ -326,15 +316,17 @@ public class TCPServer {
 
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
-                    PrintWriter pw = new PrintWriter(errorWriter);
-                    pw.println(e.getMessage());
-                    pw.flush();
-                    try {
-                        errorWriter.flush();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                    if (errorWriter != null) {
+                        PrintWriter pw = new PrintWriter(errorWriter);
+                        pw.println(e.getMessage());
+                        pw.flush();
+                        try {
+                            errorWriter.flush();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        pw.close();
                     }
-                    pw.close();
 
                     try {
                         out.write("success".getBytes());
@@ -345,28 +337,21 @@ public class TCPServer {
                 }
                 finally {
                     try {
-                        obsfileWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        positionWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        lineWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    try {
-                        errorWriter.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        speedWriter.close();
+                        if (obsfileWriter != null) {
+                            obsfileWriter.close();
+                        }
+                        if (positionWriter != null) {
+                            positionWriter.close();
+                        }
+                        if (lineWriter != null) {
+                            lineWriter.close();
+                        }
+                        if (errorWriter != null) {
+                            errorWriter.close();
+                        }
+                        if (speedWriter != null) {
+                            speedWriter.close();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

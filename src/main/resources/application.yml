@@ -11,8 +11,9 @@ ws:
   port3: ${POTION_WS_PORT:18082}
   port4: ${SPEED_WS_PORT:18083}
   point:
-    port1: ${POINT_GROUND_WS_PORT:18180}
+    port1: ${POINT_CLOUND_WS_PORT:18180}
     port2: ${POINT_OBS_WS_PORT:18181}
+    port3: ${POINT_POSITION_WS_PORT:18182}
 
 #spring:
 #  redis:
