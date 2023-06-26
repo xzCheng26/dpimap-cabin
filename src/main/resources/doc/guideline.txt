@@ -1,0 +1,474 @@
+header:
+  seq: 10875
+  stamp: 
+    secs: 1682303071
+    nsecs: 689864488
+  frame_id: ''
+frame_number: 0
+is_valid_frame: True
+trajectoryinfo: 
+  path_id: 0
+  total_path_length: 12.2002773285
+  total_path_time: 8.0
+  decision_type: 0
+  light_type: 3
+  lane_ids: []
+  trajectorypoints: 
+    - 
+      position: 
+        x: 456163.752635
+        y: 4397773.51563
+      velocity: 0.0500066131353
+      heading: 2.07896614075
+      curvature: 0.0
+      s: 0.0
+      t: 0.0
+      point_type: 0
+    - 
+      position: 
+        x: 456163.493304
+        y: 4397773.98173
+      velocity: 0.596646726131
+      heading: 2.07769417763
+      curvature: -0.00446592224762
+      s: 0.533387243748
+      t: 2.20000004768
+      point_type: 0
+    - 
+      position: 
+        x: 456163.235645
+        y: 4397774.44735
+      velocity: 0.931965172291
+      heading: 2.07451248169
+      curvature: -0.00723110372201
+      s: 1.06553852558
+      t: 2.90000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456162.980162
+        y: 4397774.91318
+      velocity: 1.19564819336
+      heading: 2.07026195526
+      curvature: -0.00854961387813
+      s: 1.59683048725
+      t: 3.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456162.731244
+        y: 4397775.37187
+      velocity: 1.41447377205
+      heading: 2.0657222271
+      curvature: -0.00867498479784
+      s: 2.1187069416
+      t: 3.79999995232
+      point_type: 0
+    - 
+      position: 
+        x: 456162.442895
+        y: 4397775.90941
+      velocity: 1.63553643227
+      heading: 2.06068468094
+      curvature: -0.00766000011936
+      s: 2.72870779037
+      t: 4.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456162.201224
+        y: 4397776.36465
+      velocity: 1.80015051365
+      heading: 2.05712008476
+      curvature: -0.00608323793858
+      s: 3.24411463737
+      t: 4.5
+      point_type: 0
+    - 
+      position: 
+        x: 456161.938205
+        y: 4397776.86399
+      velocity: 1.96166980267
+      heading: 2.054292202
+      curvature: -0.00387763371691
+      s: 3.80848860741
+      t: 4.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456161.654138
+        y: 4397777.40621
+      velocity: 2.11820554733
+      heading: 2.0527203083
+      curvature: -0.00124575640075
+      s: 4.42061805725
+      t: 5.09999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456161.349177
+        y: 4397777.98939
+      velocity: 2.26786541939
+      heading: 2.05280733109
+      curvature: 0.00145226716995
+      s: 5.07872438431
+      t: 5.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456161.023383
+        y: 4397778.61092
+      velocity: 2.40877509117
+      heading: 2.05466151237
+      curvature: 0.00367656978779
+      s: 5.78046226501
+      t: 5.69999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456160.676972
+        y: 4397779.26762
+      velocity: 2.53909158707
+      heading: 2.05787205696
+      curvature: 0.00469268811867
+      s: 6.52292966843
+      t: 6.0
+      point_type: 0
+    - 
+      position: 
+        x: 456160.434952
+        y: 4397779.72326
+      velocity: 2.61918115616
+      heading: 2.06022500992
+      curvature: 0.00424851058051
+      s: 7.03885364532
+      t: 6.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456160.184684
+        y: 4397780.19197
+      velocity: 2.69320034981
+      heading: 2.06208920479
+      curvature: 0.00253716134466
+      s: 7.57019758224
+      t: 6.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456159.927132
+        y: 4397780.67284
+      velocity: 2.76058912277
+      heading: 2.06269145012
+      curvature: 6.14216696704e-05
+      s: 8.11569213867
+      t: 6.59999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456159.663457
+        y: 4397781.1649
+      velocity: 2.82078742981
+      heading: 2.06273412704
+      curvature: 9.11613096832e-05
+      s: 8.67395401001
+      t: 6.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456159.394432
+        y: 4397781.6669
+      velocity: 2.87324213982
+      heading: 2.0627951622
+      curvature: 0.000122349229059
+      s: 9.24349021912
+      t: 7.0
+      point_type: 0
+    - 
+      position: 
+        x: 456159.120803
+        y: 4397782.1774
+      velocity: 2.91739988327
+      heading: 2.06287503242
+      curvature: 0.000152000880917
+      s: 9.82269763947
+      t: 7.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456158.84337
+        y: 4397782.69488
+      velocity: 2.95270776749
+      heading: 2.06297183037
+      curvature: 0.000176730318344
+      s: 10.409860611
+      t: 7.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456158.562988
+        y: 4397783.21774
+      velocity: 2.97861242294
+      heading: 2.06308221817
+      curvature: 0.000193105675862
+      s: 11.003153801
+      t: 7.59999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456158.280556
+        y: 4397783.74426
+      velocity: 2.99456095695
+      heading: 2.06320023537
+      curvature: 0.000196478082216
+      s: 11.6006422043
+      t: 7.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456157.997048
+        y: 4397784.27264
+      velocity: 3.0
+      heading: 2.06331682205
+      curvature: 0.000187341574929
+      s: 12.2002773285
+      t: 8.0
+      point_type: 0
+---
+header: 
+  seq: 10876
+  stamp: 
+    secs: 1682303071
+    nsecs: 788319240
+  frame_id: ''
+frame_number: 0
+is_valid_frame: True
+trajectoryinfo: 
+  path_id: 0
+  total_path_length: 12.2002773285
+  total_path_time: 8.0
+  decision_type: 0
+  light_type: 3
+  lane_ids: []
+  trajectorypoints: 
+    - 
+      position: 
+        x: 456163.752635
+        y: 4397773.51563
+      velocity: 0.0500066131353
+      heading: 2.07896614075
+      curvature: 0.0
+      s: 0.0
+      t: 0.0
+      point_type: 0
+    - 
+      position: 
+        x: 456163.493304
+        y: 4397773.98173
+      velocity: 0.596646726131
+      heading: 2.07769417763
+      curvature: -0.00446592224762
+      s: 0.533387243748
+      t: 2.20000004768
+      point_type: 0
+    - 
+      position: 
+        x: 456163.235645
+        y: 4397774.44735
+      velocity: 0.931965172291
+      heading: 2.07451248169
+      curvature: -0.00723110372201
+      s: 1.06553852558
+      t: 2.90000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456162.980162
+        y: 4397774.91318
+      velocity: 1.19564819336
+      heading: 2.07026195526
+      curvature: -0.00854961387813
+      s: 1.59683048725
+      t: 3.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456162.731244
+        y: 4397775.37187
+      velocity: 1.41447377205
+      heading: 2.0657222271
+      curvature: -0.00867498479784
+      s: 2.1187069416
+      t: 3.79999995232
+      point_type: 0
+    - 
+      position: 
+        x: 456162.442895
+        y: 4397775.90941
+      velocity: 1.63553643227
+      heading: 2.06068468094
+      curvature: -0.00766000011936
+      s: 2.72870779037
+      t: 4.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456162.201224
+        y: 4397776.36465
+      velocity: 1.80015051365
+      heading: 2.05712008476
+      curvature: -0.00608323793858
+      s: 3.24411463737
+      t: 4.5
+      point_type: 0
+    - 
+      position: 
+        x: 456161.938205
+        y: 4397776.86399
+      velocity: 1.96166980267
+      heading: 2.054292202
+      curvature: -0.00387763371691
+      s: 3.80848860741
+      t: 4.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456161.654138
+        y: 4397777.40621
+      velocity: 2.11820554733
+      heading: 2.0527203083
+      curvature: -0.00124575640075
+      s: 4.42061805725
+      t: 5.09999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456161.349177
+        y: 4397777.98939
+      velocity: 2.26786541939
+      heading: 2.05280733109
+      curvature: 0.00145226716995
+      s: 5.07872438431
+      t: 5.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456161.023383
+        y: 4397778.61092
+      velocity: 2.40877509117
+      heading: 2.05466151237
+      curvature: 0.00367656978779
+      s: 5.78046226501
+      t: 5.69999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456160.676972
+        y: 4397779.26762
+      velocity: 2.53909158707
+      heading: 2.05787205696
+      curvature: 0.00469268811867
+      s: 6.52292966843
+      t: 6.0
+      point_type: 0
+    - 
+      position: 
+        x: 456160.434952
+        y: 4397779.72326
+      velocity: 2.61918115616
+      heading: 2.06022500992
+      curvature: 0.00424851058051
+      s: 7.03885364532
+      t: 6.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456160.184684
+        y: 4397780.19197
+      velocity: 2.69320034981
+      heading: 2.06208920479
+      curvature: 0.00253716134466
+      s: 7.57019758224
+      t: 6.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456159.927132
+        y: 4397780.67284
+      velocity: 2.76058912277
+      heading: 2.06269145012
+      curvature: 6.14216696704e-05
+      s: 8.11569213867
+      t: 6.59999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456159.663457
+        y: 4397781.1649
+      velocity: 2.82078742981
+      heading: 2.06273412704
+      curvature: 9.11613096832e-05
+      s: 8.67395401001
+      t: 6.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456159.394432
+        y: 4397781.6669
+      velocity: 2.87324213982
+      heading: 2.0627951622
+      curvature: 0.000122349229059
+      s: 9.24349021912
+      t: 7.0
+      point_type: 0
+    - 
+      position: 
+        x: 456159.120803
+        y: 4397782.1774
+      velocity: 2.91739988327
+      heading: 2.06287503242
+      curvature: 0.000152000880917
+      s: 9.82269763947
+      t: 7.19999980927
+      point_type: 0
+    - 
+      position: 
+        x: 456158.84337
+        y: 4397782.69488
+      velocity: 2.95270776749
+      heading: 2.06297183037
+      curvature: 0.000176730318344
+      s: 10.409860611
+      t: 7.40000009537
+      point_type: 0
+    - 
+      position: 
+        x: 456158.562988
+        y: 4397783.21774
+      velocity: 2.97861242294
+      heading: 2.06308221817
+      curvature: 0.000193105675862
+      s: 11.003153801
+      t: 7.59999990463
+      point_type: 0
+    - 
+      position: 
+        x: 456158.280556
+        y: 4397783.74426
+      velocity: 2.99456095695
+      heading: 2.06320023537
+      curvature: 0.000196478082216
+      s: 11.6006422043
+      t: 7.80000019073
+      point_type: 0
+    - 
+      position: 
+        x: 456157.997048
+        y: 4397784.27264
+      velocity: 3.0
+      heading: 2.06331682205
+      curvature: 0.000187341574929
+      s: 12.2002773285
+      t: 8.0
+      point_type: 0
+

@@ -1,0 +1,24 @@
+header: 
+  overlap_dis: 0.3
+  show_dis: 30
+objs: 
+  - 
+    xabs: 456303.7573
+    yabs: 4397780.351
+    heading: 121.163131714
+    type: 0
+  - 
+    xabs: 456292.1456
+    yabs: 4397774.968
+    heading: 121.163131714
+    type: 0
+  - 
+    xabs: 456300.4642
+    yabs: 4397778.283
+    heading: 121.163131714
+    type: 0
+  - 
+    xabs: 456244.1316
+    yabs: 4397780.35108
+    heading: 4397748.847
+    type: 0
