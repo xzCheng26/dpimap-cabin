@@ -1,5 +1,6 @@
 package com.dpi.map.cabin;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.dpi.map.cabin.servlet.BeanContext;
 import com.github.benmanes.caffeine.cache.Cache;
 import org.mybatis.spring.annotation.MapperScan;
@@ -14,7 +15,7 @@ import org.springframework.cache.annotation.EnableCaching;
 public class CabinApplication {
   public static void main(String[] args) {
     SpringApplication.run(CabinApplication.class,args);
-    if (args != null) {
+    if (args.length != 0) {
       Cache<String, Object> cache = BeanContext.getBean(Cache.class);
       boolean cacheFlag = Boolean.parseBoolean(args[0]);
       String basePath = args[1];
