@@ -3,6 +3,7 @@ package com.dpi.map.cabin.domain;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 实时位置
@@ -33,12 +34,20 @@ public class PositionResponse {
     /**
      * 航向角,单位：du
      */
-    private Double yaw;
+    private Float yaw;
 
     private Double speedX;
 
     private Double speedY;
 
     private String currentTime;
+
+    private Float pitch;
+
+    private Float roll;
+
+    private Float azimuth;
+
+    private List<Double[]> data;
 
 }

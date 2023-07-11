@@ -1,35 +1,18 @@
 package com.dpi.map.cabin.servlet;
 
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.dpi.map.cabin.common.Const;
-import com.dpi.map.cabin.domain.ObstacleOfflineResponse;
 import com.dpi.map.cabin.server.*;
 import com.dpi.map.cabin.server.render.CollectDetailWebSocket;
 import com.github.benmanes.caffeine.cache.Cache;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.io.IOUtils;
-import org.geotools.geometry.DirectPosition2D;
-import org.geotools.referencing.CRS;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-import org.opengis.referencing.operation.TransformException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -42,7 +25,7 @@ public class MyPostConstruct {
     private Cache<String, Object> cache;
 
     @javax.annotation.PostConstruct
-    public void initTcpServer() {
+    public void initTcpServer() throws IOException {
                 Long cutTime = System.currentTimeMillis();
 //                File file = new File(Const.LOG_PATH + "\\" + cutTime);
 //                if (!file.exists()){
@@ -76,8 +59,50 @@ public class MyPostConstruct {
                 .start();
                 System.out.println("车速服务启动");
 
+                TCPServer pointPositionServer = new TCPServer(30010);
+                new Thread(pointPositionServer::start).start();
+                System.out.println("点云实时位置服务启动");
+
+                TCPServer pointCloundServer = new TCPServer(30011);
+                new Thread(pointCloundServer::start).start();
+                System.out.println("点云服务启动");
+
+                new Thread(new ConsultationReciveSocket(30012, "青勘院实时位置服务启动")).start();
+
                 initCollectServer();
-//
+                initShootServer();
+    }
+
+    private void initShootServer() {
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://mep2-dpi-gateway-external.uat.dpi-earth.cn:18010/gisserver/external/query/hdvt-detail-sid?serverId=0af556679149430f";
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Cache<String, Object> cache = BeanContext.getBean(Cache.class);
+        Map<String, Object> map = Maps.newHashMap();
+
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        Runnable task = () -> {
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    System.out.println(responseBody);
+                } else {
+                    // 处理错误响应
+                    System.out.println("请求失败：" + response.code() + " " + response.message());
+                }
+            } catch (IOException e) {
+                // 处理异常
+                e.printStackTrace();
+            }
+        };
+
+        // 设置定时任务的延迟时间和执行间隔时间（单位：毫秒）,从当前时间开始，每隔1秒执行一次
+        executor.scheduleAtFixedRate(task, 0, 1000, TimeUnit.MILLISECONDS);
+//        executor.shutdown(); // 关闭定时任务
     }
 
     private void initCollectServer() {
@@ -91,12 +116,13 @@ public class MyPostConstruct {
         Map<String, Object> map = Maps.newHashMap();
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-    Runnable task =
-        () -> {
+        Runnable task = () -> {
           try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
               String responseBody = response.body().string();
-              // 处理响应数据
+                System.out.println("我是1");
+
+                // 处理响应数据
               JSONObject jsonObject = JSONObject.parseObject(responseBody);
               JSONObject dataObj = jsonObject.getJSONObject("data");
               Integer taskId = dataObj.getInteger("taskId");
@@ -104,7 +130,7 @@ public class MyPostConstruct {
               String taskStatus = dataObj.getString("taskStatus");
               String collectRoad = dataObj.getString("collectRoad");
               Object taskIdObj = cache.getIfPresent("taskId");
-              if (taskIdObj == null) {
+              if (taskIdObj == null || !Objects.equals(taskId, taskIdObj)) {
                   cache.put("taskId", taskId);
                   map.put("taskId", taskId);
                   map.put("handleVehicle", handleVehicle);

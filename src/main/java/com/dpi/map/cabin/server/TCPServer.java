@@ -157,7 +157,7 @@ public class TCPServer {
                                         && local.getDouble("longitude") != null
                                         && local.getDouble("yaw") != null) {
                                     positionResponse.setCurrentTime(DateUtil.formatDateTime(new Date()));
-                                    positionResponse.setYaw(local.getDouble("yaw"));
+                                    positionResponse.setYaw(local.getFloat("yaw"));
                                     positionResponse.setLongitude(local.getDouble("longitude"));
                                     positionResponse.setLatitude(local.getDouble("latitude"));
 

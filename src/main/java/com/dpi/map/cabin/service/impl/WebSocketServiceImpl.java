@@ -132,7 +132,7 @@ public class WebSocketServiceImpl implements WebSocketService {
                 positionResponse.setPositionX(local.getDouble("position_x"));
                 positionResponse.setPositionY(local.getDouble("position_y"));
                 positionResponse.setAltitude(local.getDouble("altitude"));
-                positionResponse.setYaw(local.getDouble("yaw"));
+                positionResponse.setYaw(local.getFloat("yaw"));
 
                 positionResponse.setLongitude(local.getDouble("longitude"));
                 positionResponse.setLatitude(local.getDouble("latitude"));

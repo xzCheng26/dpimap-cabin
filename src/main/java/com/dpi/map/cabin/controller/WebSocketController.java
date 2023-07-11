@@ -167,7 +167,7 @@ public class WebSocketController {
                 positionResponse.setPositionX(local.getDouble("position_x"));
                 positionResponse.setPositionY(local.getDouble("position_y"));
                 positionResponse.setAltitude(local.getDouble("altitude"));
-                positionResponse.setYaw(local.getDouble("yaw"));
+                positionResponse.setYaw(local.getFloat("yaw"));
 
                 positionResponse.setLongitude(local.getDouble("longitude"));
                 positionResponse.setLatitude(local.getDouble("latitude"));
@@ -272,7 +272,7 @@ public class WebSocketController {
                 float[] heading ={15, 15.2f,30.5f,30,45,45.8f,60,90,180,210};
                 int hIndex = words.nextInt(heading.length);
                 positionResponse.setAltitude(1.2);
-                positionResponse.setYaw((double) heading[hIndex]);
+                positionResponse.setYaw((float) heading[hIndex]);
 
 
                 for (String bb : aa) {
