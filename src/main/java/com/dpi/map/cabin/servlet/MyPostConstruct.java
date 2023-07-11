@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -82,14 +83,21 @@ public class MyPostConstruct {
                 .get()
                 .build();
         Cache<String, Object> cache = BeanContext.getBean(Cache.class);
-        Map<String, Object> map = Maps.newHashMap();
-
+        Map<String, Object> map = Maps.newHashMapWithExpectedSize(1);
+        map.put("sys", "RENDER");
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         Runnable task = () -> {
             try (Response response = client.newCall(request).execute()) {
                 if (response.isSuccessful()) {
                     String responseBody = response.body().string();
-                    System.out.println(responseBody);
+                    JSONObject jsonObject = JSONObject.parseObject(responseBody);
+                    JSONObject dataObj = jsonObject.getJSONObject("data");
+                    Integer version = dataObj.getInteger("version");
+                    Object versionObj = cache.getIfPresent("render-version");
+                    if (versionObj == null || !Objects.equals(version, versionObj)) {
+                        cache.put("render-version", version);
+                        CollectDetailWebSocket.sendInfoToClient(JSONUtil.toJsonStr(map));
+                    }
                 } else {
                     // 处理错误响应
                     System.out.println("请求失败：" + response.code() + " " + response.message());
@@ -120,7 +128,6 @@ public class MyPostConstruct {
           try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
               String responseBody = response.body().string();
-                System.out.println("我是1");
 
                 // 处理响应数据
               JSONObject jsonObject = JSONObject.parseObject(responseBody);
@@ -132,11 +139,11 @@ public class MyPostConstruct {
               Object taskIdObj = cache.getIfPresent("taskId");
               if (taskIdObj == null || !Objects.equals(taskId, taskIdObj)) {
                   cache.put("taskId", taskId);
+                  map.put("sys", "COLLECT");
                   map.put("taskId", taskId);
                   map.put("handleVehicle", handleVehicle);
                   map.put("taskStatus", taskStatus);
                   map.put("collectRoad", collectRoad);
-                  System.out.println(JSONUtil.toJsonStr(map));
                   CollectDetailWebSocket.sendInfoToClient(JSONUtil.toJsonStr(map));
               }
             } else {
