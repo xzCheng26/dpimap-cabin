@@ -1,15 +1,18 @@
 package com.dpi.map.cabin.servlet;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.dpi.map.cabin.domain.PositionResponse;
 import com.dpi.map.cabin.server.*;
+import com.dpi.map.cabin.server.pointcloud.PointPositionWebSocket;
 import com.dpi.map.cabin.server.render.CollectDetailWebSocket;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +23,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@Slf4j
 public class MyPostConstruct {
 
     @Autowired
@@ -72,12 +76,41 @@ public class MyPostConstruct {
 
                 initCollectServer();
                 initShootServer();
+                buildPushPositionWebSocket();
+
+    }
+
+    private void buildPushPositionWebSocket() throws IOException {
+        Cache<String, Object> cache = BeanContext.getBean(Cache.class);
+        PositionResponse positionResponse = new PositionResponse();
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        log.info("开始从缓存取定位数据......");
+        Runnable task = () -> {
+            if (cache.getIfPresent("longitude") != null) {
+                positionResponse.setLongitude((Double) cache.getIfPresent("longitude"));
+                positionResponse.setLatitude((Double) cache.getIfPresent("latitude"));
+                double degrees = Math.toDegrees((float)cache.getIfPresent("yaw"));
+                positionResponse.setYaw((float) degrees);
+                positionResponse.setCurrentTime(DateUtil.formatDateTime(new Date()));
+                positionResponse.setPitch((Float) cache.getIfPresent("pitch"));
+                positionResponse.setRoll((Float) cache.getIfPresent("roll"));
+                positionResponse.setAzimuth((float) degrees);
+                try {
+                    PointPositionWebSocket.sendInfoToClient(JSONUtil.toJsonStr(positionResponse));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        // 设置定时任务的延迟时间和执行间隔时间（单位：毫秒）,从当前时间开始，每隔30毫秒执行一次
+        executor.scheduleAtFixedRate(task, 0, 30, TimeUnit.MILLISECONDS);
     }
 
     private void initShootServer() {
 
         OkHttpClient client = new OkHttpClient();
-        String url = "https://mep2-dpi-gateway-external.uat.dpi-earth.cn:18010/gisserver/external/query/hdvt-detail-sid?serverId=0af556679149430f";
+        String url = "https://mep2-dpi-gateway-external.uat.dpi-earth.cn:18010/gisserver/external/query/hdvt-detail-sid?serverId=f3c106963a2c49da";
         Request request = new Request.Builder()
                 .url(url)
                 .get()

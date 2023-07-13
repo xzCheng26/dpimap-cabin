@@ -1,17 +1,18 @@
 package com.dpi.map.cabin.server;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONUtil;
 import com.dpi.map.cabin.domain.PositionResponse;
 import com.dpi.map.cabin.domain.proto.DpiMeOutput;
-import com.dpi.map.cabin.server.pointcloud.PointPositionWebSocket;
-import org.apache.commons.lang3.time.DateUtils;
+import com.dpi.map.cabin.servlet.BeanContext;
+import com.github.benmanes.caffeine.cache.Cache;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Date;
 
+@Slf4j
 public class ConsultationReciveSocket implements Runnable{
     DatagramSocket socket = null;
 
@@ -51,7 +52,14 @@ public class ConsultationReciveSocket implements Runnable{
                 positionResponse.setRoll(positionMsg.getVehiclePos().getPoint6D().getRoll());
                 positionResponse.setAzimuth((float) degrees);
 
-                PointPositionWebSocket.sendInfoToClient(JSONUtil.toJsonStr(positionResponse));
+                Cache<String, Object> cache = BeanContext.getBean(Cache.class);
+                cache.put("longitude", positionMsg.getVehiclePos().getPoint6D().getX());
+                cache.put("latitude", positionMsg.getVehiclePos().getPoint6D().getY());
+                cache.put("yaw", (float) degrees);
+                cache.put("pitch", positionMsg.getVehiclePos().getPoint6D().getPitch());
+                cache.put("roll", positionMsg.getVehiclePos().getPoint6D().getRoll());
+                cache.put("azimuth", (float) degrees);
+                log.info("定位数据已存储到缓存......");
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -275,26 +275,6 @@
 
         <plugins>
             <plugin>
-                <groupId>io.protostuff</groupId>
-                <artifactId>protostuff-maven-plugin</artifactId>
-                <version>1.6.0</version>
-
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <configuration>
-                            <baseDir>src/main/proto</baseDir>
-                            <outputBaseDir>target/generated-sources</outputBaseDir>
-                        </configuration>
-                    </execution>
-                </executions>
-
-            </plugin>
-
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.7</version>
